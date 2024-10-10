@@ -5,7 +5,8 @@ VSCode Extension to automate some steps in modification of code based on AI gene
 ```
 npm install
 npm run compile
-npm install --save-dev @types/xmldom
+npm install xml-js
+npm install --save-dev @types/xml-js
 
 npm install -g vsce
 vsce package
