@@ -25,6 +25,9 @@ When providing code updates or modifications, please follow these guidelines to 
 
 10. Do not specify line numbers. Instead, rely on descriptive contexts for locating code.
 
+11. Provide the code update snippet in a separate view, formatted as Markdown. This allows for easier testing and application of the update.
+
+
 Example format:
 
 ```xml
@@ -48,4 +51,4 @@ Added a method to remove items from the shopping cart.
 </explanation>
 ```
 
-Please format all code updates using this structure. If you encounter any ambiguities or need to provide multiple options, please explain this in an `<explanation>` tag.
+Please format all code updates using this structure in a separate view. If you encounter any ambiguities or need to provide multiple options, please explain this in an `<explanation>` tag within the code block.

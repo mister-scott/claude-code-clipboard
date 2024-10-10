@@ -1,5 +1,5 @@
 {
-    "name": "claude-code-clipboard",
+    "name": "claudeCodeClipboard",
     "repository": "https://github.com/mister-scott/claude-code-clipboard",
     "displayName": "Claude Code Clipboard",
     "description": "Apply code updates from AI generated content via clipboard",
@@ -11,21 +11,21 @@
         "Other"
     ],
     "activationEvents": [
-        "onCommand:codeUpdate.applyUpdates"
+        "onCommand:claudeCodeClipboard.applyUpdates"
     ],
     "main": "./out/extension.js",
     "contributes": {
         "commands": [
             {
-                "command": "codeUpdate.applyUpdates",
+                "command": "claudeCodeClipboard.applyUpdates",
                 "title": "Apply Code Updates from Clipboard"
             }
         ],
         "keybindings": [
             {
-                "command": "codeUpdate.applyUpdates",
-                "key": "ctrl+alt+p",
-                "mac": "cmd+alt+p"
+                "command": "claudeCodeClipboard.applyUpdates",
+                "key": "ctrl+alt+v",
+                "mac": "cmd+alt+v"
             }
         ]
     },
