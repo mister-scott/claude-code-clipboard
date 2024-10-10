@@ -1,7 +1,8 @@
 {
-    "name": "code-update-extension",
-    "displayName": "Code Update Extension",
-    "description": "Apply code updates from clipboard",
+    "name": "claude-code-clipboard",
+    "repository": "https://github.com/mister-scott/claude-code-clipboard",
+    "displayName": "Claude Code Clipboard",
+    "description": "Apply code updates from AI generated content via clipboard",
     "version": "0.0.1",
     "engines": {
         "vscode": "^1.60.0"
@@ -44,6 +45,6 @@
         "typescript": "^4.2.4"
     },
     "dependencies": {
-        "@xmldom/xmldom": "^0.6.0"
+        "@xmldom/xmldom": "^0.8.10"
     }
 }
