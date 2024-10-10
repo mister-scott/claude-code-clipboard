@@ -1,6 +1,5 @@
-// src/codeUpdateHandler.ts
 import * as vscode from 'vscode';
-import { DOMParser } from 'xmldom';
+import { DOMParser } from '@xmldom/xmldom';
 
 interface CodeUpdate {
     action: string;
