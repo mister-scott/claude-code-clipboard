@@ -31,7 +31,7 @@ export class CodeUpdateHandler {
                 content: node.textContent || ''
             };
             updates.push(update);
-            console.log('CodeUpdateHandler: Parsed update:', update);
+            console.log(`CodeUpdateHandler: Parsed update ${i + 1}:`, JSON.stringify(update));
         }
 
         console.log(`CodeUpdateHandler: Parsed ${updates.length} updates`);
@@ -43,22 +43,29 @@ export class CodeUpdateHandler {
         const edits: vscode.TextEdit[] = [];
         const document = this.editor.document;
 
-        for (const update of updates) {
-            console.log('CodeUpdateHandler: Processing update:', update);
+        for (let i = 0; i < updates.length; i++) {
+            const update = updates[i];
+            console.log(`CodeUpdateHandler: Processing update ${i + 1}:`, JSON.stringify(update));
             const range = await this.findContextRange(update.context, update.subcontext);
             if (range) {
-                console.log('CodeUpdateHandler: Found range for context:', range);
+                console.log(`CodeUpdateHandler: Found range for context:`, range.toString());
+                let edit: vscode.TextEdit;
                 switch (update.action) {
                     case 'replace':
-                        edits.push(vscode.TextEdit.replace(range, update.content));
+                        edit = vscode.TextEdit.replace(range, update.content);
                         break;
                     case 'insert':
-                        edits.push(vscode.TextEdit.insert(range.end, '\n' + update.content));
+                        edit = vscode.TextEdit.insert(range.end, '\n' + update.content);
                         break;
                     case 'delete':
-                        edits.push(vscode.TextEdit.delete(range));
+                        edit = vscode.TextEdit.delete(range);
                         break;
+                    default:
+                        console.log(`CodeUpdateHandler: Unknown action ${update.action}`);
+                        continue;
                 }
+                edits.push(edit);
+                console.log(`CodeUpdateHandler: Added ${update.action} edit`);
             } else {
                 console.log(`CodeUpdateHandler: Could not find context for update: ${update.context}`);
             }
@@ -69,7 +76,7 @@ export class CodeUpdateHandler {
     }
 
     private async findContextRange(context: string, subcontext?: string): Promise<vscode.Range | null> {
-        console.log(`CodeUpdateHandler: Finding context range for context: ${context}, subcontext: ${subcontext}`);
+        console.log(`CodeUpdateHandler: Finding context range for context: "${context}", subcontext: "${subcontext}"`);
         const document = this.editor.document;
         const fullText = document.getText();
         const lines = fullText.split('\n');
@@ -110,7 +117,7 @@ export class CodeUpdateHandler {
             new vscode.Position(contextStart, 0),
             new vscode.Position(contextEnd, lines[contextEnd].length)
         );
-        console.log(`CodeUpdateHandler: Returning range: ${range}`);
+        console.log(`CodeUpdateHandler: Returning range: ${range.toString()}`);
         return range;
     }
 }

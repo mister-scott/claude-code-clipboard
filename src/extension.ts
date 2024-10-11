@@ -14,44 +14,45 @@ export function activate(context: vscode.ExtensionContext) {
         }
         console.log(message);
     }
-    console.log('Claude Code Clipboard extension is now active');
+    log('Claude Code Clipboard extension is now active');
 
     let disposable = vscode.commands.registerCommand('claudeCodeClipboard.applyUpdates', async () => {
-        console.log('Claude Code Clipboard: applyUpdates command triggered');
+        log('Claude Code Clipboard: applyUpdates command triggered');
         const editor = vscode.window.activeTextEditor;
         if (!editor) {
-            console.log('Claude Code Clipboard: No active editor found');
+            log('Claude Code Clipboard: No active editor found');
             vscode.window.showErrorMessage('No active editor found');
             return;
         }
 
         const clipboard = await vscode.env.clipboard.readText();
         if (!clipboard) {
-            console.log('Claude Code Clipboard: Clipboard is empty');
+            log('Claude Code Clipboard: Clipboard is empty');
             vscode.window.showErrorMessage('Clipboard is empty');
             return;
         }
 
-        console.log('Claude Code Clipboard: Clipboard content:', clipboard);
+        log('Claude Code Clipboard: Clipboard content:');
+        log(clipboard);
 
         try {
             const handler = new CodeUpdateHandler(editor);
             const updates = handler.parseUpdates(clipboard);
             
-            console.log(`Claude Code Clipboard: Parsed ${updates.length} updates`);
+            log(`Claude Code Clipboard: Parsed ${updates.length} updates`);
 
             if (updates.length === 0) {
-                console.log('Claude Code Clipboard: No updates found in clipboard content');
+                log('Claude Code Clipboard: No updates found in clipboard content');
                 vscode.window.showInformationMessage('No updates found in clipboard content');
                 return;
             }
 
             const edits = await handler.generateEdits(updates);
 
-            console.log(`Claude Code Clipboard: Generated ${edits.length} edits`);
+            log(`Claude Code Clipboard: Generated ${edits.length} edits`);
 
             if (edits.length === 0) {
-                console.log('Claude Code Clipboard: No applicable updates found for the current file');
+                log('Claude Code Clipboard: No applicable updates found for the current file');
                 vscode.window.showInformationMessage('No applicable updates found for the current file');
                 return;
             }
@@ -61,20 +62,19 @@ export function activate(context: vscode.ExtensionContext) {
 
             const success = await vscode.workspace.applyEdit(edit);
             if (success) {
-                console.log('Claude Code Clipboard: Code updates applied successfully');
-                vscode.window.showInformationMessage('Code updates applied successfully');
+                log('Claude Code Clipboard: Code updates applied successfully');
+                vscode.window.showInformationMessage(`Applied ${edits.length} code updates successfully`);
             } else {
-                console.log('Claude Code Clipboard: Failed to apply code updates');
+                log('Claude Code Clipboard: Failed to apply code updates');
                 vscode.window.showErrorMessage('Failed to apply code updates');
             }
         } catch (error) {
-            console.error('Claude Code Clipboard: Error applying updates:', error);
+            log(`Claude Code Clipboard: Error applying updates: ${error}`);
             vscode.window.showErrorMessage(`Error applying updates: ${error}`);
         }
     });
 
     context.subscriptions.push(disposable);
-
 }
 
 export function deactivate() {}

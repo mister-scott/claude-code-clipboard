@@ -11,6 +11,9 @@
     "categories": [
         "Other"
     ],
+    "activationEvents": [
+        "onCommand:claudeCodeClipboard.applyUpdates"
+    ],
     "main": "./out/extension.js",
     "contributes": {
         "commands": [
