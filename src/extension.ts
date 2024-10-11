@@ -57,10 +57,13 @@ export function activate(context: vscode.ExtensionContext) {
                 return;
             }
 
-            const edit = new vscode.WorkspaceEdit();
-            edit.set(editor.document.uri, edits);
+            // Create a workspace edit and apply all edits at once
+            const workspaceEdit = new vscode.WorkspaceEdit();
+            edits.forEach(edit => {
+                workspaceEdit.replace(editor.document.uri, edit.range, edit.newText);
+            });
 
-            const success = await vscode.workspace.applyEdit(edit);
+            const success = await vscode.workspace.applyEdit(workspaceEdit);
             if (success) {
                 log('Claude Code Clipboard: Code updates applied successfully');
                 vscode.window.showInformationMessage(`Applied ${edits.length} code updates successfully`);

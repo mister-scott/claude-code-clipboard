@@ -2,6 +2,8 @@
 
 When providing code updates or modifications, please follow these guidelines to ensure compatibility with the user's VSCode extension:
 
+0. Please format each code update using this structure in a separate view. This is very important. If there are 4 updates, there should be 4 separate views with code updates.
+
 1. Use XML-like tags to structure your code updates. The main tag is `<code-update>`.
 
 2. Each `<code-update>` tag should have the following attributes:
